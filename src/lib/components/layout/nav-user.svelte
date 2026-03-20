@@ -7,10 +7,23 @@
 	import * as Avatar from "$lib/components/ui/avatar/index.js";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-
-	let { user }: { user: { name: string; email: string; avatar: string } } = $props();
+	import { firekitAuth, firekitUser } from "svelte-firekit";
+	import { getUserInitials } from "$lib/utils.js";
 
 	const sidebar = Sidebar.useSidebar();
+
+	const displayLabel = $derived.by(() => {
+		const u = firekitUser.user;
+		const name = u?.displayName?.trim();
+		if (name) return name;
+		const mail = u?.email?.trim();
+		if (mail) return mail.split("@")[0] ?? "User";
+		return "User";
+	});
+
+	const email = $derived(firekitUser.user?.email ?? "");
+	const photoURL = $derived(firekitUser.user?.photoURL);
+	const initials = $derived(getUserInitials(firekitUser.user?.displayName, firekitUser.user?.email));
 </script>
 
 <Sidebar.Menu>
@@ -23,14 +36,16 @@
 						size="lg"
 						class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 					>
-						<Avatar.Root class="size-8 rounded-lg grayscale">
-							<Avatar.Image src={user.avatar} alt={user.name} />
-							<Avatar.Fallback class="rounded-lg">CN</Avatar.Fallback>
+						<Avatar.Root class="size-8 rounded-lg ">
+							{#if photoURL}
+								<Avatar.Image src={photoURL} alt={displayLabel} />
+							{/if}
+							<Avatar.Fallback class="rounded-lg">{initials}</Avatar.Fallback>
 						</Avatar.Root>
 						<div class="grid flex-1 text-start text-sm leading-tight">
-							<span class="truncate font-medium">{user.name}</span>
+							<span class="truncate font-medium">{displayLabel}</span>
 							<span class="text-muted-foreground truncate text-xs">
-								{user.email}
+								{email}
 							</span>
 						</div>
 						<DotsVerticalIcon class="ms-auto size-4" />
@@ -46,13 +61,15 @@
 				<DropdownMenu.Label class="p-0 font-normal">
 					<div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
 						<Avatar.Root class="size-8 rounded-lg">
-							<Avatar.Image src={user.avatar} alt={user.name} />
-							<Avatar.Fallback class="rounded-lg">CN</Avatar.Fallback>
+							{#if photoURL}
+								<Avatar.Image src={photoURL} alt={displayLabel} />
+							{/if}
+							<Avatar.Fallback class="rounded-lg">{initials}</Avatar.Fallback>
 						</Avatar.Root>
 						<div class="grid flex-1 text-start text-sm leading-tight">
-							<span class="truncate font-medium">{user.name}</span>
+							<span class="truncate font-medium">{displayLabel}</span>
 							<span class="text-muted-foreground truncate text-xs">
-								{user.email}
+								{email}
 							</span>
 						</div>
 					</div>
@@ -73,7 +90,7 @@
 					</DropdownMenu.Item>
 				</DropdownMenu.Group>
 				<DropdownMenu.Separator />
-				<DropdownMenu.Item>
+				<DropdownMenu.Item variant="destructive" onclick={() => void firekitAuth.signOut()}>
 					<LogoutIcon />
 					Log out
 				</DropdownMenu.Item>
