@@ -1,20 +1,15 @@
 <script lang="ts">
-	import CameraIcon from "@tabler/icons-svelte/icons/camera";
-	import ChartBarIcon from "@tabler/icons-svelte/icons/chart-bar";
+	import BoltIcon from "@tabler/icons-svelte/icons/bolt";
+	import CloudUploadIcon from "@tabler/icons-svelte/icons/cloud-upload";
 	import DashboardIcon from "@tabler/icons-svelte/icons/dashboard";
-	import DatabaseIcon from "@tabler/icons-svelte/icons/database";
-	import FileAiIcon from "@tabler/icons-svelte/icons/file-ai";
-	import FileDescriptionIcon from "@tabler/icons-svelte/icons/file-description";
-	import FileWordIcon from "@tabler/icons-svelte/icons/file-word";
-	import FolderIcon from "@tabler/icons-svelte/icons/folder";
+	import FileTextIcon from "@tabler/icons-svelte/icons/file-text";
+	import FlameIcon from "@tabler/icons-svelte/icons/flame";
 	import HelpIcon from "@tabler/icons-svelte/icons/help";
-	import InnerShadowTopIcon from "@tabler/icons-svelte/icons/inner-shadow-top";
-	import ListDetailsIcon from "@tabler/icons-svelte/icons/list-details";
-	import ReportIcon from "@tabler/icons-svelte/icons/report";
-	import SearchIcon from "@tabler/icons-svelte/icons/search";
-	import SettingsIcon from "@tabler/icons-svelte/icons/settings";
-	import UsersIcon from "@tabler/icons-svelte/icons/users";
-	import NavDocuments from "./nav-documents.svelte";
+	import BrandGithubIcon from "@tabler/icons-svelte/icons/brand-github";
+	import ListIcon from "@tabler/icons-svelte/icons/list";
+	import LockIcon from "@tabler/icons-svelte/icons/lock";
+	import PencilIcon from "@tabler/icons-svelte/icons/pencil";
+	import WifiIcon from "@tabler/icons-svelte/icons/wifi";
 	import NavMain from "./nav-main.svelte";
 	import NavSecondary from "./nav-secondary.svelte";
 	import NavUser from "./nav-user.svelte";
@@ -23,113 +18,18 @@
 
 	const data = {
 		navMain: [
-			{
-				title: "Dashboard",
-				url: "#",
-				icon: DashboardIcon,
-			},
-			{
-				title: "Lifecycle",
-				url: "#",
-				icon: ListDetailsIcon,
-			},
-			{
-				title: "Analytics",
-				url: "#",
-				icon: ChartBarIcon,
-			},
-			{
-				title: "Projects",
-				url: "#",
-				icon: FolderIcon,
-			},
-			{
-				title: "Team",
-				url: "#",
-				icon: UsersIcon,
-			},
-		],
-		navClouds: [
-			{
-				title: "Capture",
-				icon: CameraIcon,
-				isActive: true,
-				url: "#",
-				items: [
-					{
-						title: "Active Proposals",
-						url: "#",
-					},
-					{
-						title: "Archived",
-						url: "#",
-					},
-				],
-			},
-			{
-				title: "Proposal",
-				icon: FileDescriptionIcon,
-				url: "#",
-				items: [
-					{
-						title: "Active Proposals",
-						url: "#",
-					},
-					{
-						title: "Archived",
-						url: "#",
-					},
-				],
-			},
-			{
-				title: "Prompts",
-				icon: FileAiIcon,
-				url: "#",
-				items: [
-					{
-						title: "Active Proposals",
-						url: "#",
-					},
-					{
-						title: "Archived",
-						url: "#",
-					},
-				],
-			},
+			{ title: "Overview", url: "/", icon: DashboardIcon },
+			{ title: "Authentication", url: "/auth", icon: LockIcon },
+			{ title: "Documents", url: "/documents", icon: FileTextIcon },
+			{ title: "Collections", url: "/collections", icon: ListIcon },
+			{ title: "Mutations", url: "/mutations", icon: PencilIcon },
+			{ title: "Realtime DB", url: "/realtime", icon: BoltIcon },
+			{ title: "Storage", url: "/storage", icon: CloudUploadIcon },
+			{ title: "Presence", url: "/presence", icon: WifiIcon },
 		],
 		navSecondary: [
-			{
-				title: "Settings",
-				url: "#",
-				icon: SettingsIcon,
-			},
-			{
-				title: "Get Help",
-				url: "#",
-				icon: HelpIcon,
-			},
-			{
-				title: "Search",
-				url: "#",
-				icon: SearchIcon,
-			},
-		],
-		documents: [
-			{
-				name: "Data Library",
-				url: "#",
-				icon: DatabaseIcon,
-			},
-			{
-				name: "Reports",
-				url: "#",
-				icon: ReportIcon,
-			},
-			{
-				name: "Word Assistant",
-				url: "#",
-				icon: FileWordIcon,
-			},
+			{ title: "Firekit Docs", url: "https://sveltefirekit.com", icon: HelpIcon },
+			{ title: "GitHub", url: "https://github.com/code-gio/svelte-firekit-starter", icon: BrandGithubIcon },
 		],
 	};
 
@@ -142,9 +42,9 @@
 			<Sidebar.MenuItem>
 				<Sidebar.MenuButton class="data-[slot=sidebar-menu-button]:!p-1.5">
 					{#snippet child({ props })}
-						<a href="##" {...props}>
-							<InnerShadowTopIcon class="!size-5" />
-							<span class="text-base font-semibold">Acme Inc.</span>
+						<a href="/" {...props}>
+							<FlameIcon class="!size-5" />
+							<span class="text-base font-semibold">Firekit Starter</span>
 						</a>
 					{/snippet}
 				</Sidebar.MenuButton>
@@ -153,7 +53,6 @@
 	</Sidebar.Header>
 	<Sidebar.Content>
 		<NavMain items={data.navMain} />
-		<NavDocuments items={data.documents} />
 		<NavSecondary items={data.navSecondary} class="mt-auto" />
 	</Sidebar.Content>
 	<Sidebar.Footer>
